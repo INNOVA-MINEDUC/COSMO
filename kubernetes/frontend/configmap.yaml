@@ -1,0 +1,206 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: dspace-frontend-config
+data:
+  config.prod.yml: |
+    themes:
+      - name: 'custom'
+        default: true
+  
+    ui:
+      ssl: false
+      host: 0.0.0.0
+      port: 4000
+      nameSpace: /
+      useProxies: true
+      
+    rest:
+      ssl: true
+      host: cosmo-dev.mineduc.edu.gt
+      port: 443
+      nameSpace: /server
+      ssrBaseUrl: http://dspace-backend:8080/server
+      
+    ssr:
+      enabled: true
+      inlineCriticalCss: false
+      excludePathPatterns:
+        - pattern: "^/communities/[a-f0-9-]{36}/browse(/.*)?$"
+          flag: "i"
+        - pattern: "^/collections/[a-f0-9-]{36}/browse(/.*)?$"
+          flag: "i"
+        - pattern: "^/browse/"
+        - pattern: "^/search$"
+        - pattern: "^/community-list$"
+        - pattern: "^/admin/"
+        - pattern: "^/processes/?"
+        - pattern: "^/notifications/"
+        - pattern: "^/statistics/?"
+        - pattern: "^/access-control/"
+        - pattern: "^/reload/"
+        - pattern: "^/health$"
+      enableSearchComponent: false
+      enableBrowseComponent: false
+      transferState: true
+      replaceRestUrl: true
+
+    auth:
+      ui:
+        timeUntilIdle: 900000
+        idleGracePeriod: 300000
+      rest:
+        timeLeftBeforeTokenRefresh: 120000
+
+    cache:
+      msToLive:
+        default: 900000
+      control: max-age=604800
+      autoSync:
+        defaultTime: 0
+        maxBufferSize: 100
+        timePerMethod:
+          PATCH: 3
+      serverSide:
+        debug: false
+        botCache:
+          max: 1000
+          timeToLive: 86400000
+          allowStale: true
+        anonymousCache:
+          max: 0
+          timeToLive: 10000
+          allowStale: true
+
+    form:
+      spellCheck: true
+      validatorMap:
+        required: required
+        regex: pattern
+
+    notifications:
+      rtl: false
+      position:
+        - top
+        - right
+      maxStack: 8
+      timeOut: 5000
+      clickToClose: true
+      animate: scale
+
+    submission:
+      autosave:
+        metadata: []
+        timer: 0
+      duplicateDetection:
+        alwaysShowSection: false
+      icons:
+        metadata:
+          - name: dc.author
+            style: fas fa-user
+          - name: default
+            style: ''
+        authority:
+          confidence:
+            - value: 600
+              style: text-success
+              icon: fa-circle-check
+            - value: 500
+              style: text-info
+              icon: fa-gear
+            - value: 400
+              style: text-warning
+              icon: fa-circle-question
+            - value: 300
+              style: text-muted
+              icon: fa-thumbs-down
+            - value: 200
+              style: text-muted
+              icon: fa-circle-exclamation
+            - value: 100
+              style: text-muted
+              icon: fa-circle-stop
+            - value: 0
+              style: text-muted
+              icon: fa-ban
+            - value: -1
+              style: text-muted
+              icon: fa-circle-xmark
+            - value: default
+              style: text-muted
+              icon: fa-circle-xmark
+
+    defaultLanguage: es
+
+    languages:
+      - code: en
+        label: English
+        active: true
+      - code: es
+        label: Español
+        active: true
+
+    security:
+      captcha:
+        enabled: true
+        siteKey: '6LdWdCEsAAAAAJmm5oSzAYWv5wPhdR8pC9P2sCuE'
+        mode: 'checkbox'
+        version: 'v2'
+      csp:
+        enabled: true
+        directives:
+          default-src:
+            - "'self'"
+            - "https://*.googletagmanager.com"
+            - "https://*.google-analytics.com"
+            - "https://*.analytics.google.com"
+            - "https://*.gstatic.com"
+            - "https://*.google.com"
+            - "https://fonts.googleapis.com"
+            - "https://cdnjs.cloudflare.com"
+            - "https://d23dyxeqlo5psv.cloudfront.net"
+          script-src:
+            - "'self'"
+            - "'unsafe-inline'"
+            - "'unsafe-eval'"
+            - "https://*.googletagmanager.com"
+            - "https://*.google-analytics.com"
+            - "https://*.analytics.google.com"
+            - "https://cdnjs.cloudflare.com"
+            - "https://d23dyxeqlo5psv.cloudfront.net"
+            - "https://www.google.com"
+            - "https://www.gstatic.com"
+          style-src:
+            - "'self'"
+            - "'unsafe-inline'"
+            - "https://fonts.googleapis.com"
+            - "https://cdnjs.cloudflare.com"
+            - "https://d23dyxeqlo5psv.cloudfront.net"
+            - "https://www.google.com"
+          font-src:
+            - "'self'"
+            - "https://fonts.gstatic.com"
+            - "https://cdnjs.cloudflare.com"
+            - "https://d23dyxeqlo5psv.cloudfront.net"
+            - "https://fonts.googleapis.com"
+          img-src:
+            - "'self'"
+            - "data:"
+            - "https://*.tile.openstreetmap.org"
+            - "https://*.google-analytics.com"
+            - "https://*.analytics.google.com"
+            - "https://d23dyxeqlo5psv.cloudfront.net"
+            - "https://www.google.com"
+            - "https://www.gstatic.com"
+          connect-src:
+            - "'self'"
+            - "https://*.google-analytics.com"
+            - "https://*.analytics.google.com"
+            - "https://stats.g.doubleclick.net"
+            - "https://d23dyxeqlo5psv.cloudfront.net"
+            - "https://www.google.com"
+            - "https://cosmo-dev.mineduc.edu.gt"
+          frame-src:
+            - "'self'"
+            - "https://www.google.com"
+            - "https://www.gstatic.com"

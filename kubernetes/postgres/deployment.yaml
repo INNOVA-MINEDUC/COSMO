@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dspacedb
+spec:
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: dspacedb
+  template:
+    metadata:
+      labels:
+        app: dspacedb
+    spec:
+      containers:
+        - name: dspacedb
+          image: dspace/dspace-postgres-pgcrypto:dspace-9_x
+          env:
+            - name: PGDATA
+              value: /pgdata/data
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: dspace-secrets
+                  key: db-password
+          ports:
+            - containerPort: 5432
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "100m"
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+          livenessProbe:
+            tcpSocket:
+              port: 5432
+            initialDelaySeconds: 30
+            periodSeconds: 10
+          readinessProbe:
+            tcpSocket:
+              port: 5432
+            initialDelaySeconds: 10
+            periodSeconds: 5
+          volumeMounts:
+            - name: pgdata
+              mountPath: /pgdata
+      volumes:
+        - name: pgdata
+          persistentVolumeClaim:
+            claimName: pgdata-pvc

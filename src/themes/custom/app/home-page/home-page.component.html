@@ -1,0 +1,108 @@
+<div class="landing-wrapper">
+  <div class="landing-background">
+    <img src="assets/test/images/fondo-test.jpg" alt="Background" class="bg-img">
+  </div>
+
+  <header class="landing-header">
+    <div class="logo-group">
+      <div class="logo-container">
+        <!-- Using DSpace logo as placeholder for Ministry logo -->
+        <img src="assets/images/dspace-logo.svg" alt="Ministerio de Educación" class="ministry-logo">
+        <div class="logo-text">
+          <span>Ministerio de</span>
+          <span>Educación</span>
+          <small>GUATEMALA</small>
+        </div>
+      </div>
+      <div class="logo-container">
+        <img src="assets/images/dspace-logo.svg" alt="INNOVA" class="ministry-logo">
+        <div class="logo-text">
+          <span>INNOVA</span>
+        </div>
+      </div>
+    </div>
+    <div class="auth-container">
+      <!-- Search Button -->
+      <a [routerLink]="['/search']" [queryParams]="{ view: 'grid' }" class="search-pill" title="Búsqueda Avanzada">
+        <i class="fas fa-search"></i>
+        <span class="search-text d-none d-md-inline">Búsqueda Avanzada</span>
+      </a>
+
+      <!-- Statistics Button -->
+      <a routerLink="/statistics" class="stats-pill" title="Estadísticas del Sitio">
+        <i class="fas fa-chart-bar"></i>
+      </a>
+
+      <!-- Si NO está autenticado, mostrar botón de iniciar sesión -->
+      <ng-container *ngIf="!(isAuthenticated$ | async)">
+        <a routerLink="/login" class="login-pill">Iniciar Sesión</a>
+      </ng-container>
+      
+      <!-- Si ESTÁ autenticado, mostrar menú de usuario -->
+      <ng-container *ngIf="isAuthenticated$ | async">
+        <div class="user-menu-container">
+          <a routerLink="/profile" class="user-pill" title="Mi Perfil">
+            <i class="fas fa-user-circle"></i>
+            <span>Mi Perfil</span>
+          </a>
+          <a routerLink="/logout" class="logout-pill" title="Cerrar Sesión">
+            <i class="fas fa-sign-out-alt"></i>
+          </a>
+        </div>
+      </ng-container>
+    </div>
+  </header>
+
+  <main class="landing-main">
+    <div class="content-grid">
+      <div class="character-col">
+        <img src="assets/test/images/astronauta.png" alt="Ajk'iy" class="astronaut-char">
+      </div>
+
+      <div class="interaction-col">
+        
+
+        <div class="selection-area">
+          <h3>Selecciona tu nivel</h3>
+
+          <div class="level-buttons">
+
+            <ng-container *ngIf="(topCommunities$ | async) as communitiesRD">
+
+              <ng-container *ngIf="communitiesRD?.hasSucceeded">
+
+                <a *ngFor="let community of communitiesRD.payload.page" [routerLink]="['/communities', community.id]"
+                  class="level-btn">
+                  {{ community.name }}
+                </a>
+
+              </ng-container>
+
+              <div *ngIf="communitiesRD?.isLoading" style="color: #1a2b49;">
+                Cargando niveles...
+              </div>
+
+            </ng-container>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="landing-footer">
+    <div class="footer-left">
+      <!-- Placeholder for orange character -->
+      <div class="orange-char-placeholder"></div>
+    </div>
+    <div class="footer-right">
+      <div class="digecade-badge">
+        <img src="assets/images/dspace-logo.svg" alt="DIGECADE" class="digecade-logo">
+      </div>
+      <div class="social-links">
+        <a href="#"><i class="fab fa-facebook-f"></i></a>
+        <a href="#"><i class="fab fa-instagram"></i></a>
+        <a href="#"><i class="fab fa-youtube"></i></a>
+      </div>
+    </div>
+  </footer>
+</div>

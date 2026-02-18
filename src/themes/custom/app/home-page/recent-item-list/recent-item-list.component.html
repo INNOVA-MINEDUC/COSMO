@@ -1,0 +1,25 @@
+<ng-container *ngVar="(itemRD$ | async) as itemRD">
+  @if (itemRD?.hasSucceeded && itemRD?.payload?.page.length > 0) {
+    <div class="recent-items-grid" @fadeIn>
+      @for (item of itemRD?.payload?.page; track item) {
+        <div class="recent-item-card">
+            <ds-listable-object-component-loader [object]="item" [viewMode]="viewMode">
+            </ds-listable-object-component-loader>
+        </div>
+      }
+    </div>
+    
+    <div class="text-center mt-4">
+        <button (click)="onLoadMore()" class="btn btn-outline-primary load-more-btn">
+            {{ 'vocabulary-treeview.load-more' | translate }}
+        </button>
+    </div>
+  }
+  @if (itemRD?.hasFailed) {
+    <ds-error message="{{'error.recent-submissions' | translate}}"></ds-error>
+  }
+  @if (!itemRD || itemRD.isLoading) {
+    <ds-loading message="{{'loading.recent-submissions' | translate}}">
+    </ds-loading>
+  }
+</ng-container>

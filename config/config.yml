@@ -1,0 +1,427 @@
+# rest:
+#   ssl: true
+#   host: sandbox.dspace.org
+#   port: 443
+#   nameSpace: /server
+
+ui:
+  ssl: false
+  host: localhost
+  port: 4000
+  nameSpace: /
+  # The UI theme variables can be configured in the UI to match the institutional branding.
+  # See all the available theming options in the default-theme.ts file.
+  # When the following variable is commented out, the UI will use the default theme.
+  # theme:
+  #   name: dspace
+
+# The configuration for the Angular Universal Universal server
+# Angular Universal options can be found here: https://universal.angular.io/overview/
+# Whether to enable Angular Universal Universal
+universal:
+  enabled: true
+
+# Whether to enable an express session that will be persisted in a cookie
+# DSpace requires this for certain authentication methods to work
+session:
+  enabled: true
+  # Whether the cookie containing the session ID can only be sent over an HTTPS connection.
+  # It's recommended to set this to true in production.
+  cookie:
+    secure: false
+
+# Whether to enable compression for HTTP responses
+compression:
+  enabled: true
+
+# The default language code to use if the browser language is not supported
+defaultLanguage: en
+
+# The security configuration for the DSpace UI.
+# This section is used to configure Content Security Policy (CSP) and other security headers.
+# See https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy
+# for more information about CSP.
+security:
+  # Whether to enable CSP.
+  # If enabled, the UI will send a Content-Security-Policy header with the configured directives.
+  # It's recommended to set this to true in production.
+  csp:
+    enabled: true
+    # The directives to use in the Content-Security-Policy header.
+    # See https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/Directives
+    # for a list of available directives.
+    # The default configuration is a good starting point for a production environment.
+    # It allows loading resources from the same origin, and from some common CDNs.
+    # It's recommended to review this configuration and adapt it to your needs.
+    directives:
+      default-src:
+        - "'self'"
+        - "https://*.googletagmanager.com"
+        - "https://*.google-analytics.com"
+        - "https://*.analytics.google.com"
+        - "https://*.gstatic.com"
+        - "https://fonts.googleapis.com"
+        - "https://cdnjs.cloudflare.com"
+        - "https://d23dyxeqlo5psv.cloudfront.net"
+      script-src:
+        - "'self'"
+        - "'unsafe-inline'"
+        - "'unsafe-eval'"
+        - "https://*.googletagmanager.com"
+        - "https://*.google-analytics.com"
+        - "https://*.analytics.google.com"
+        - "https://cdnjs.cloudflare.com"
+        - "https://d23dyxeqlo5psv.cloudfront.net"
+      style-src:
+        - "'self'"
+        - "'unsafe-inline'"
+        - "https://fonts.googleapis.com"
+        - "https://cdnjs.cloudflare.com"
+        - "https://d23dyxeqlo5psv.cloudfront.net"
+      font-src:
+        - "'self'"
+        - "https://fonts.gstatic.com"
+        - "https://cdnjs.cloudflare.com"
+        - "https://d23dyxeqlo5psv.cloudfront.net"
+      img-src:
+        - "'self'"
+        - "data:"
+        - "https://*.tile.openstreetmap.org"
+        - "https://*.google-analytics.com"
+        - "https://*.analytics.google.com"
+        - "https://d23dyxeqlo5psv.cloudfront.net"
+      connect-src:
+        - "'self'"
+        - "https://*.google-analytics.com"
+        - "https://*.analytics.google.com"
+        - "https://stats.g.doubleclick.net"
+        - "https://d23dyxeqlo5psv.cloudfront.net"
+
+# Cache settings
+# To enable server-side caching, set enabled to true
+# The expires and maxAge properties are set in milliseconds
+cache:
+  enabled: true
+  expires: 300000
+  maxAge: 300000
+
+# Authentication methods
+# An array of authentication methods you'd like to enable in the UI
+# For each method, you can configure the following properties:
+# - name: the name of the authentication method (e.g. 'shibboleth', 'oidc', 'ip')
+# - passive: whether to use this method for passive login (i.e. login without user interaction)
+# - shibboleth: (for shibboleth) the path to the shibboleth login endpoint
+# - oidc: (for oidc) the configuration for the oidc provider
+# - ip: (for ip) the configuration for the ip authentication
+# - cas: (for cas) the configuration for the cas provider
+auth:
+  # OIDC authentication
+  # oidc:
+  #   name: oidc
+  #   passive: false
+  #   settings:
+  #     authority: # URL of the OIDC provider
+  #     client_id: # client ID of the OIDC application
+  #     redirect_uri: # URL to redirect to after login
+  #     post_logout_redirect_uri: # URL to redirect to after logout
+  #     response_type: id_token token
+  #     scope: openid
+  # Shibboleth authentication
+  # shibboleth:
+  #   name: shibboleth
+  #   passive: false
+  #   path: /Shibboleth.sso/Login
+  # CAS authentication
+  # cas:
+  #   name: cas
+  #   passive: false
+  #   settings:
+  #     protocol: cas
+  #     version: 3.0
+  #     host: # URL of the CAS provider
+  #     port: 443
+  #     path: /cas/login
+  # IP authentication
+  # ip:
+  #   name: ip
+  #   passive: true
+
+# Form settings
+form:
+  # The captcha settings for the feedback form.
+  # To enable captcha, set enabled to true and provide the site key.
+  # See https://developers.google.com/recaptcha/docs/v3 for more information.
+  captcha:
+    enabled: false
+    siteKey:
+
+# The Google Analytics tracking id
+# When the following variable is commented out, the UI will not use Google Analytics
+# googleAnalytics:
+#   trackingId:
+
+# The Matomo Analytics tracking settings
+# When the following variable is commented out, the UI will not use Matomo Analytics
+# matomo:
+#   url: '' # The URL of the Matomo instance, without a trailing slash (e.g. https://example.com/matomo)
+#   siteId: 0 # The ID of the website in Matomo
+
+# The Bitstream media viewer settings
+# These settings are used to configure the media viewer for bitstreams.
+# The media viewer is a component that can be used to display different types of media files.
+# For each media type, you can configure the following properties:
+# - viewer: the name of the viewer to use (e.g. 'image', 'video')
+# - mimetypes: an array of mimetypes that can be displayed with this viewer
+# - thumbnail: the name of the bitstream to use as a thumbnail
+mediaViewer:
+  image:
+    viewer: 'image'
+    mimetypes:
+      - 'image/jpeg'
+      - 'image/png'
+      - 'image/gif'
+      - 'image/bmp'
+      - 'image/svg+xml'
+    thumbnail: 'THUMBNAIL'
+  video:
+    viewer: 'video'
+    mimetypes:
+      - 'video/mp4'
+      - 'video/webm'
+      - 'video/ogg'
+    thumbnail: 'THUMBNAIL'
+  pdf:
+    viewer: 'pdf'
+    mimetypes:
+      - 'application/pdf'
+    thumbnail: 'THUMBNAIL'
+  iiif:
+    viewer: 'iiif'
+    mimetypes:
+      - 'image/jp2'
+      - 'image/jpeg'
+      - 'image/png'
+    thumbnail: 'THUMBNAIL'
+    iiifQuery: '?format=json' # This is a query parameter that will be appended to the bitstream URL to fetch IIIF metadata
+
+# The item page settings
+# These settings are used to configure the item page.
+item:
+  # The number of full text bitstreams to display in the full item page
+  fulltext:
+    # The number of bitstreams to display in the full item page
+    show: 5
+
+# The collection page settings
+# These settings are used to configure the collection page.
+collection:
+  # The number of items to display per page in the collection page
+  pageSize: 10
+
+# The community page settings
+# These settings are used to configure the community page.
+community:
+  # The number of sub-communities and collections to display per page
+  pageSize: 10
+
+# The home page settings
+# These settings are used to configure the home page.
+homePage:
+  # The number of recent submissions to display
+  recentSubmissions:
+    pageSize: 5
+    # The sort order for recent submissions.
+    # See https://github.com/DSpace/DSpace/blob/main/dspace-server-webapp/src/main/java/org/dspace/app/rest/parameter/RecentSubmissionsEnum.java
+    # for a list of available sort options.
+    sortField: dc.date.accessioned
+  # The number of top-level communities to display
+  topLevelCommunityList:
+    pageSize: 10
+
+# The browse by settings
+# These settings are used to configure the browse by pages.
+browseBy:
+  # The number of items to display per page
+  pageSize: 10
+  # The number of years to display in the date browse by page
+  yearLimit: 10
+  # The type of browse by page to use for the date browse by page.
+  # Can be 'date' or 'metadata'.
+  # If 'date', the date browse by page will be used.
+  # If 'metadata', the metadata browse by page will be used.
+  # See https://wiki.lyrasis.org/display/DSDOC7x/DSpace+UI+Configuration#DSpaceUIConfiguration-ConfiguretheBrowse-ByDatePage
+  # for more information.
+  # date:
+  #   type: date
+
+# The search page settings
+# These settings are used to configure the search page.
+search:
+  # The number of items to display per page
+  pageSize: 10
+  # The sort order for search results.
+  # See https://wiki.lyrasis.org/display/DSDOC7x/REST+API#RESTAPI-GeneralStructureofDSpaceRESTresources
+  # for more information.
+  sort:
+    # The default sort order
+    default: 'score,DESC'
+    # The available sort options
+    options:
+      -
+        name: 'score'
+        direction: 'DESC'
+      -
+        name: 'dc.title'
+        direction: 'ASC'
+      -
+        name: 'dc.title'
+        direction: 'DESC'
+      -
+        name: 'dc.date.issued'
+        direction: 'ASC'
+      -
+        name: 'dc.date.issued'
+        direction: 'DESC'
+
+# MyDSpace page settings
+# These settings are used to configure the MyDSpace page.
+mydspace:
+  # The number of items to display per page
+  pageSize: 10
+  # The sort order for search results.
+  # See https://wiki.lyrasis.org/display/DSDOC7x/REST+API#RESTAPI-GeneralStructureofDSpaceRESTresources
+  # for more information.
+  sort:
+    # The default sort order
+    default: 'score,DESC'
+    # The available sort options
+    options:
+      -
+        name: 'score'
+        direction: 'DESC'
+      -
+        name: 'dc.title'
+        direction: 'ASC'
+      -
+        name: 'dc.title'
+        direction: 'DESC'
+      -
+        name: 'dc.date.issued'
+        direction: 'ASC'
+      -
+        name: 'dc.date.issued'
+        direction: 'DESC'
+
+# The configuration for the suggestion feature.
+# See https://wiki.lyrasis.org/display/DSDOC7x/OpenAIRE+Broker+integration#OpenAIREBrokerintegration-EnableandconfiguretheBrokerinDSpace
+# for more information.
+suggestion:
+  # The number of suggestions to display per page
+  pageSize: 10
+  # The sort order for suggestions.
+  # See https://github.com/DSpace/DSpace/blob/main/dspace-api/src/main/java/org/dspace/app/suggestion/SuggestionSort.java
+  # for a list of available sort options.
+  sort:
+    # The default sort order
+    default: 'date,DESC'
+    # The available sort options
+    options:
+      -
+        name: 'date'
+        direction: 'DESC'
+      -
+        name: 'title'
+        direction: 'ASC'
+
+# The configuration for the notification feature.
+# This section is used to configure the notification polling interval.
+notifications:
+  # The polling interval in milliseconds
+  polling:
+    # The polling interval when the user is active
+    active: 30000
+    # The polling interval when the user is idle
+    idle: 120000
+
+# The configuration for the submission form.
+# This section is used to configure the submission form.
+# See https://wiki.lyrasis.org/display/DSDOC7x/Submission+User+Interface
+# for more information.
+submission:
+  # The number of items to display per page in the collection selector
+  pageSize: 10
+  # The sort order for collections.
+  # See https://wiki.lyrasis.org/display/DSDOC7x/REST+API#RESTAPI-GeneralStructureofDSpaceRESTresources
+  # for more information.
+  sort:
+    # The default sort order
+    default: 'dc.title,ASC'
+    # The available sort options
+    options:
+      -
+        name: 'dc.title'
+        direction: 'ASC'
+      -
+        name: 'dc.title'
+        direction: 'DESC'
+
+# The configuration for the quality assurance feature.
+# This section is used to configure the quality assurance pages.
+# See https://wiki.lyrasis.org/display/DSDOC7x/OpenAIRE+Broker+integration#OpenAIREBrokerintegration-EnableandconfiguretheBrokerinDSpace
+# for more information.
+qualityAssurance:
+  # The number of topics to display per page
+  topicsPageSize: 10
+  # The number of suggestions to display per page
+  suggestionsPageSize: 10
+
+# The info page settings
+# These settings are used to configure the info pages.
+# The info pages are static pages that can be used to display information about the repository.
+# For each info page, you can configure the following properties:
+# - enabled: whether to enable the info page
+# - privacyStatement: the privacy statement for the info page
+# - endUserAgreement: the end user agreement for the info page
+# - feedback: the feedback settings for the info page
+info:
+  # Whether to enable the info pages
+  enabled: true
+  # The privacy statement for the info page
+  # The privacy statement is a static page that can be used to display information about the privacy policy.
+  # To enable the privacy statement, set enabled to true.
+  # The privacy statement can be configured in the messages.en.yml file.
+  privacyStatement:
+    enabled: true
+  # The end user agreement for the info page
+  # The end user agreement is a static page that can be used to display information about the end user agreement.
+  # To enable the end user agreement, set enabled to true.
+  # The end user agreement can be configured in the messages.en.yml file.
+  endUserAgreement:
+    enabled: true
+  # The feedback settings for the info page
+  # The feedback page is a static page that can be used to collect feedback from users.
+  # To enable the feedback page, set enabled to true.
+  # The feedback can be configured in the messages.en.yml file.
+  feedback:
+    enabled: true
+    # The recipients for the feedback form
+    # The feedback form will send an email to these recipients.
+    # It's recommended to set this to a valid email address in production.
+    recipients:
+      - 'example@example.com'
+
+# The configuration for the COAR Notify protocol feature.
+# See https://notify.coar-repositories.org/ for more information.
+notifyCoar:
+  # The base URL of the COAR Notify protocol
+  baseUrl: 'http://localhost:8080/server/ldn'
+
+# The idle modal settings
+# These settings are used to configure the idle modal.
+# The idle modal is a modal that is displayed when the user is idle.
+# The idle modal can be configured to display a countdown timer and to log out the user after a certain amount of time.
+idleModal:
+  # The idle time in minutes
+  idleTime: 10
+  # The timeout in minutes
+  timeout: 5

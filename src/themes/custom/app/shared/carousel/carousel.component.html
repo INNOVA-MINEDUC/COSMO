@@ -1,0 +1,14 @@
+<div class="carousel-container">
+  <h2>{{ title }}</h2>
+  <div class="carousel-grid" #carouselGrid>
+    <div class="card" *ngFor="let item of [1,2,3,4,5,6]">
+      <div class="card-img-top"></div>
+      <div class="card-body">
+        <h5 class="card-title">Card title</h5>
+        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+      </div>
+    </div>
+  </div>
+  <button class="btn-prev" aria-label="Previous" (click)="scrollLeft()">&lt;</button>
+  <button class="btn-next" aria-label="Next" (click)="scrollRight()">&gt;</button>
+</div>

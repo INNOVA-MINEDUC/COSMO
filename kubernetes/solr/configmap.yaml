@@ -1,0 +1,30 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: solr-init-script
+data:
+  entrypoint.sh: |
+    #!/bin/bash
+    set -e
+    init-var-solr
+    
+    # Helper function to create core and copy config
+    setup_core() {
+      local core_name=$1
+      local config_path=$2
+      precreate-core "$core_name" "$config_path"
+      # Copy config files if they exist in the source
+      if [ -d "$config_path" ]; then
+        cp -r "$config_path"/* "$core_name"
+      fi
+    }
+
+    setup_core authority /opt/solr/server/solr/configsets/authority
+    setup_core oai /opt/solr/server/solr/configsets/oai
+    setup_core search /opt/solr/server/solr/configsets/search
+    setup_core statistics /opt/solr/server/solr/configsets/statistics
+    setup_core qaevent /opt/solr/server/solr/configsets/qaevent
+    setup_core suggestion /opt/solr/server/solr/configsets/suggestion
+
+    chown -R solr:solr /var/solr
+    runuser -u solr -- solr-foreground

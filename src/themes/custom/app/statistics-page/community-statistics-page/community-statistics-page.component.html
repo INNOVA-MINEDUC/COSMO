@@ -1,0 +1,80 @@
+<div class="landing-wrapper">
+  <div class="landing-background">
+    <img src="assets/test/images/fondo-test.jpg" alt="Background" class="bg-img">
+    <div class="overlay"></div>
+  </div>
+
+  <header class="landing-header">
+    <div class="logo-group">
+      <div class="logo-container">
+        <img src="assets/images/dspace-logo.svg" alt="Ministerio de Educación" class="ministry-logo">
+        <div class="logo-text">
+          <span>Ministerio de</span>
+          <span>Educación</span>
+          <small>GUATEMALA</small>
+        </div>
+      </div>
+      <div class="logo-container">
+        <img src="assets/images/dspace-logo.svg" alt="INNOVA" class="ministry-logo">
+        <div class="logo-text">
+          <span>INNOVA</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="auth-container">
+      <ng-container *ngVar="(scope$ | async) as scope">
+        <a *ngIf="scope" [routerLink]="['/communities', scope.id]" class="back-pill" title="Volver a la Comunidad">
+          <i class="fas fa-arrow-left"></i>
+          <span>Volver</span>
+        </a>
+      </ng-container>
+    </div>
+  </header>
+
+  <main class="landing-main">
+    <div class="content-grid">
+      <div class="character-col">
+        <img src="assets/test/images/astronauta.png" alt="Astronauta" class="astronaut-char">
+      </div>
+      
+      <div class="interaction-col">
+        <div class="card-container">
+            <div class="container">
+                <ng-container *ngVar="(scope$ | async) as scope">
+                    @if (scope) {
+                    <h1
+                        class="header h3 mb-4 text-center fw-normal"
+                        id="{{ scope.id }}">
+                        {{ 'statistics.header' | translate: { scope: getName(scope) } }}
+                    </h1>
+                    }
+                </ng-container>
+
+                <ng-container *ngVar="reports$ | async as reports">
+
+                    @if (!reports) {
+                    <ds-loading></ds-loading>
+                    }
+
+                    @if (reports) {
+                    @for (report of reports; track report) {
+                        <ds-statistics-table
+                        [report]="report"
+                        class="m-2 {{ report.id }}">
+                        </ds-statistics-table>
+                    }
+                    @if ((hasData$ | async) !== true) {
+                        <div>
+                        {{ 'statistics.page.no-data' | translate }}
+                        </div>
+                    }
+                    }
+
+                </ng-container>
+            </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>

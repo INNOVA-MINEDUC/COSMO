@@ -1,0 +1,826 @@
+// Ministry of Education Guatemala - Landing Page Style (Adapted for Item Page)
+
+.landing-wrapper {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  overflow-x: hidden;
+  font-family: 'Poppins', sans-serif;
+  color: #333;
+}
+
+// Background Layer
+.landing-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+
+  .bg-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+}
+
+// Header
+.landing-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 1.5rem 3rem;
+  position: relative;
+  z-index: 10;
+
+  .logo-group {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+  }
+
+  .logo-container {
+    background: white;
+    padding: 1rem 2rem;
+    border-radius: 0 0 20px 20px; // Rounded bottom corners like the card in image
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-top: -1.5rem; // Pull up to attach to top edge if needed, or just style as card
+    z-index: 2; // Ensure logos are above other elements
+
+    .ministry-logo {
+      height: 50px;
+      width: auto;
+    }
+
+    .logo-text {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.1;
+      font-weight: 600;
+      color: #003366; // Dark blue
+
+      small {
+        font-size: 0.7rem;
+        letter-spacing: 2px;
+        margin-top: 2px;
+      }
+    }
+  }
+
+  .auth-container {
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    .stats-pill {
+      background-color: #1a2b49;
+      color: white;
+      padding: 0.6rem 1.5rem;
+      border-radius: 30px;
+      text-decoration: none;
+      font-weight: 500;
+      transition: transform 0.2s;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+
+      &:hover {
+        transform: translateY(-2px);
+        background-color: #ff8c00;
+        color: white;
+      }
+    }
+
+    .search-pill {
+      background: rgba(10, 25, 50, 0.7);
+      backdrop-filter: blur(10px);
+      border: 2px solid #00d2ff;
+      color: white;
+      padding: 0.6rem 1.8rem;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 600;
+      box-shadow: 0 0 15px rgba(0, 210, 255, 0.4), inset 0 0 10px rgba(0, 210, 255, 0.1);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.8rem;
+      transition: all 0.3s ease;
+
+      &:hover {
+        background: rgba(0, 210, 255, 0.15);
+        box-shadow: 0 0 25px rgba(0, 210, 255, 0.7), inset 0 0 15px rgba(0, 210, 255, 0.2);
+        transform: translateY(-2px);
+        text-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
+      }
+
+      i {
+          font-size: 1.2rem;
+          color: #00d2ff;
+          filter: drop-shadow(0 0 5px rgba(0, 210, 255, 0.6));
+          transition: color 0.3s ease;
+      }
+      
+      &:hover i {
+          color: white;
+      }
+      
+      .search-text {
+          font-size: 1rem;
+          letter-spacing: 0.5px;
+          text-transform: uppercase;
+          font-size: 0.9rem;
+      }
+    }
+
+    .login-pill {
+      background-color: #1a2b49;
+      color: white;
+      padding: 0.6rem 1.5rem;
+      border-radius: 30px;
+      text-decoration: none;
+      font-weight: 500;
+      transition: transform 0.2s;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+
+      &:hover {
+        transform: translateY(-2px);
+        background-color: #ff8c00;
+        color: white;
+      }
+    }
+    
+    .user-menu-container {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .user-pill {
+      background: #1a2b49;
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.85rem;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      transition: all 0.3s;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      
+      i { font-size: 1.1rem; }
+      
+      &:hover { 
+        background: #ff8c00; 
+        color: white;
+      }
+    }
+    
+    .logout-pill {
+      background: rgba(255, 255, 255, 0.9);
+      color: #dc3545;
+      padding: 0.5rem;
+      border-radius: 50%;
+      text-decoration: none;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+      transition: all 0.3s;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      
+      &:hover { 
+        background: #dc3545; 
+        color: white;
+      }
+    }
+  }
+}
+
+// Main Content
+.landing-main {
+  min-height: calc(100vh - 100px);
+  display: flex;
+  align-items: flex-start; // Cambio: alinear al inicio en vez de centrar
+  justify-content: center;
+  padding: 2rem;
+  padding-top: 1rem; // Menos padding arriba
+
+  .content-grid {
+    display: grid;
+    grid-template-columns: auto 1fr; // Astronauta se ajusta, contenido toma el resto
+    max-width: 1200px; // Más ancho para mejor distribución
+    width: 100%;
+    gap: 2rem;
+    align-items: flex-start; // Alinear al inicio
+  }
+
+  .character-col {
+    display: flex;
+    justify-content: center;
+    position: sticky; // El astronauta se queda fijo mientras scrolleas
+    top: 2rem;
+    align-self: flex-start;
+
+    .astronaut-char {
+      max-height: 45vh; // Un poco más pequeño
+      max-width: 280px;
+      width: auto;
+      filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.3));
+      animation: float 6s ease-in-out infinite;
+    }
+  }
+
+  .interaction-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+}
+
+// Item Page Specific Styles
+.item-page-container {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: 25px;
+  padding: 1.5rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  position: relative;
+  z-index: 10;
+  backdrop-filter: blur(10px);
+
+  .item-content-box {
+    width: 100%;
+  }
+
+  .alerts-container {
+    margin-bottom: 1rem;
+  }
+
+  .versions-container {
+    margin-top: 2rem;
+    padding-top: 1rem;
+    border-top: 1px solid #eee;
+  }
+
+  // === BREADCRUMBS / NAV PATH ===
+  .nav-path {
+    // Efecto de Cristal
+    background: rgba(255, 255, 255, 0.6); // Un poco más transparente aquí
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+
+    padding: 0.8rem 1.5rem;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem; // Separación del contenido
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    width: 100%;
+
+    .path-label {
+        font-size: 0.7rem;
+        color: #1a3c5e;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        white-space: nowrap;
+    }
+
+    .path-steps {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 8px;
+
+        .path-pill {
+            background-color: rgba(26, 60, 94, 0.1);
+            color: #1a3c5e;
+            padding: 6px 14px;
+            border-radius: 16px;
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 700;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            border: 1px solid transparent;
+
+            &:hover {
+                background-color: #1a3c5e;
+                color: white;
+                transform: translateY(-2px);
+                box-shadow: 0 4px 10px rgba(26, 60, 94, 0.2);
+            }
+            
+            &.home-btn {
+                background-color: rgba(2, 119, 189, 0.1);
+                color: #0277bd;
+                &:hover { background-color: #0277bd; color: white; }
+            }
+            
+            &.active {
+                background-color: rgba(255, 140, 0, 0.15);
+                color: #d84315;
+                cursor: default;
+                &:hover {
+                    transform: none;
+                    box-shadow: none;
+                    background-color: rgba(255, 140, 0, 0.15);
+                    color: #d84315;
+                }
+            }
+        }
+
+        .separator {
+            color: #1a3c5e;
+            opacity: 0.5;
+            font-weight: bold;
+        }
+    }
+  }
+}
+
+// Responsive
+@media (max-width: 1199px) {
+  .landing-main {
+    .content-grid {
+      grid-template-columns: 1fr; // Una sola columna en pantallas pequeñas
+    }
+    
+    .character-col {
+      display: none; // Ocultar astronauta en móvil
+    }
+  }
+}
+
+@media (max-width: 992px) {
+  .landing-header {
+    flex-direction: column;
+    align-items: center;
+
+    .logo-group {
+      flex-direction: column;
+      gap: 12px;
+      align-items: center;
+    }
+  }
+
+  .landing-main {
+    padding: 1rem;
+    
+    .interaction-col {
+      max-height: none;
+    }
+  }
+
+  .item-page-container {
+    padding: 1rem;
+    max-width: 100%;
+  }
+}
+
+// Override for the item detail component loaded dynamically
+// Keeping the structure but ensuring it fits the new theme
+::ng-deep {
+  // Back button styling
+  .results-back-button {
+    margin: 2rem 0 1rem 0;
+    
+    a {
+      background-color: #1a2b49; // Dark navy
+      color: white;
+      padding: 0.5rem 1.5rem;
+      border-radius: 30px;
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all 0.2s;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+
+      &:hover {
+        transform: translateY(-2px);
+        background-color: #2c4a7c;
+        color: white;
+      }
+      
+      // Icon inside back button
+      i, span.fas {
+        font-size: 0.8rem;
+      }
+    }
+  }
+
+  // Main item layout
+  .simple-item-page,
+  .untyped-item {
+    background: transparent; // Transparent because container has background
+
+    // Title section
+    .d-flex.flex-row {
+      background: transparent;
+      padding: 1rem 0 2rem 0;
+      border-bottom: 1px solid #e8eaed;
+      margin-bottom: 0;
+    }
+
+    .item-page-title-field,
+    h1.item-page-title-field {
+      font-family: 'Poppins', sans-serif;
+      font-size: 2.5rem;
+      font-weight: 700; // Bolder like home page
+      color: #003366; // Dark blue (Institucional)
+      letter-spacing: -0.02em;
+      line-height: 1.3;
+      margin: 0;
+      padding: 0; // Remove padding as container has padding
+    }
+
+    .dso-edit-menu {
+      padding: 0;
+    }
+
+    // Main content grid
+    > .row {
+      max-width: 100%; // Fit container
+      margin: 0;
+      padding: 2rem 0;
+      gap: 3rem;
+      display: grid; // Use CSS Grid
+      grid-template-columns: 380px 1fr; // Fixed width for thumbnail, rest for content
+      align-items: start;
+
+      // Left sidebar - media and metadata
+      .col-xs-12.col-md-4 {
+        flex: unset;
+        max-width: unset;
+        width: 100%; // Fill grid cell
+
+        // Thumbnail/Media viewer
+        ds-thumbnail,
+        .media-viewer,
+        ds-media-viewer {
+          display: block;
+          margin-bottom: 2rem;
+          border-radius: 25px; // Rounded corners
+          overflow: hidden;
+          box-shadow: 0 10px 25px rgba(0,0,0,0.15); // Glow/Shadow effect
+          background: #f0f2f5; // Light gray background for placeholder
+
+          img {
+            width: 100%;
+            height: auto;
+            display: block;
+          }
+          
+          // Placeholder styling if no image
+          .thumbnail-placeholder {
+             display: flex;
+             align-items: center;
+             justify-content: center;
+             height: 300px;
+             background: #e0e0e0;
+             color: #757575;
+             font-weight: 500;
+          }
+        }
+
+        // File section
+        ds-item-page-file-section {
+          display: block;
+          margin-bottom: 2rem;
+
+          .file-section {
+            background: transparent; // Remove background
+            border-radius: 0;
+            padding: 0;
+            border: none;
+
+            h2 {
+              display: none; // Hide "Files" title if desired, or keep it small
+            }
+
+            .file-download-link {
+              display: flex;
+              align-items: center;
+              justify-content: center; // Center text
+              gap: 0.75rem;
+              padding: 1rem 2rem;
+              background: linear-gradient(135deg, #ff8c00 0%, #ffaa00 100%); // Orange gradient
+              border-radius: 50px; // Pill shape
+              text-decoration: none;
+              color: white; // White text
+              margin-bottom: 0.5rem;
+              transition: all 0.3s;
+              border: none;
+              font-weight: 700;
+              font-size: 1.1rem;
+              box-shadow: 0 5px 15px rgba(255, 140, 0, 0.4); // Glow
+
+              &:hover {
+                transform: scale(1.05); // Grow effect
+                box-shadow: 0 8px 20px rgba(255, 140, 0, 0.6);
+                color: white;
+              }
+              
+              span {
+                  color: white !important;
+              }
+            }
+          }
+        }
+
+        // Metadata fields in sidebar
+        ds-item-page-date-field,
+        ds-metadata-representation-list,
+        ds-generic-item-page-field {
+          display: block;
+          margin-bottom: 1.5rem;
+          padding-bottom: 1.5rem;
+          border-bottom: 1px solid #e8eaed;
+
+          &:last-child {
+            border-bottom: none;
+          }
+
+          .item-page-field-label,
+          h2 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: #1a2b49; // Dark navy
+            margin: 0 0 0.5rem 0;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+          }
+
+          .item-page-field-value,
+          .simple-view-element {
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.95rem;
+            color: #333;
+            line-height: 1.6;
+
+            a {
+              color: #1a2b49; // Dark navy
+              text-decoration: none;
+              transition: opacity 0.2s;
+              font-weight: 600;
+              border-bottom: 1px solid transparent;
+
+              &:hover {
+                color: #ff8c00; // Orange accent
+                border-bottom-color: #ff8c00;
+              }
+            }
+          }
+        }
+      }
+
+      // Right main content area
+      .col-xs-12.col-md-6 {
+        flex: unset;
+        min-width: 0;
+        width: 100%; // Fill grid cell
+
+        // Abstract
+        ds-item-page-abstract-field {
+          display: block;
+          margin-bottom: 3rem;
+
+          .item-page-field-label {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #ff8c00; // Orange accent
+            margin: 0 0 1rem 0;
+          }
+
+          .item-page-field-value {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.05rem;
+            line-height: 1.8;
+            color: #3c4043;
+          }
+        }
+
+        // Other metadata fields
+        ds-generic-item-page-field,
+        ds-geospatial-item-page-field,
+        ds-item-page-uri-field,
+        ds-item-page-collections,
+        ds-item-page-cc-license-field {
+          display: block;
+          margin-bottom: 2rem;
+          
+          // Hide specific fields if needed (URI, Collections)
+          // Note: This targets all generic fields, need to be careful or use specific classes if available
+          // For now, we style them but maybe make them less prominent
+          
+          &.item-page-uri-field, 
+          &.item-page-collections-field {
+              opacity: 0.6; // Make less prominent
+              transform: scale(0.95);
+              transform-origin: left;
+          }
+
+          .item-page-field-label,
+          h2 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            color: #1a2b49; // Dark navy
+            margin: 0 0 0.75rem 0;
+          }
+
+          .item-page-field-value {
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.95rem;
+            line-height: 1.7;
+            color: #3c4043;
+            
+            a {
+                color: #1a2b49;
+                font-weight: 600;
+                text-decoration: none;
+                
+                &:hover {
+                    color: #ff8c00;
+                }
+            }
+          }
+        }
+
+        // Full details button
+        .btn-outline-primary {
+          background: white;
+          color: #1a2b49; // Dark navy
+          border: 2px solid #1a2b49;
+          border-radius: 30px; // Pill shape
+          padding: 0.75rem 2rem;
+          font-weight: 600;
+          transition: all 0.2s;
+          text-transform: uppercase;
+          font-size: 0.9rem;
+          letter-spacing: 0.5px;
+
+          &:hover {
+            background: #1a2b49;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(26, 43, 73, 0.2);
+          }
+        }
+      }
+    }
+  }
+}
+
+// Responsive adjustments for inner content
+@media (max-width: 992px) {
+  .landing-header {
+    padding: 1rem;
+    
+    .logo-group {
+      gap: 1rem;
+    }
+    
+    .logo-container {
+      padding: 0.5rem 1rem;
+      
+      .ministry-logo {
+        height: 35px;
+      }
+      
+      .logo-text {
+        font-size: 0.8rem;
+      }
+    }
+  }
+
+  .item-page-container {
+    padding: 1.5rem;
+    margin-top: 0.5rem;
+    border-radius: 20px;
+  }
+
+  ::ng-deep {
+    .simple-item-page,
+    .untyped-item {
+      .item-page-title-field,
+      h1.item-page-title-field {
+        font-size: 1.8rem;
+        text-align: center; // Center title on mobile
+        margin-bottom: 1rem;
+      }
+
+      > .row {
+        padding: 0;
+        display: flex; // Revert to flex for mobile
+        flex-direction: column;
+        gap: 2rem;
+
+        .col-xs-12.col-md-4,
+        .col-xs-12.col-md-6 {
+          flex: 1;
+          max-width: 100%;
+          width: 100%;
+        }
+
+        // Thumbnail adjustments for mobile
+        .col-xs-12.col-md-4 {
+          order: 1; // Ensure thumbnail is first
+          
+          ds-thumbnail,
+          .media-viewer,
+          ds-media-viewer {
+            max-width: 300px; // Limit width
+            margin: 0 auto 1.5rem auto; // Center it
+          }
+
+          // File download button full width on mobile
+          ds-item-page-file-section .file-section .file-download-link {
+            width: 100%;
+            justify-content: center;
+          }
+        }
+
+        .col-xs-12.col-md-6 {
+          order: 2;
+        }
+      }
+    }
+    
+    // Adjust back button
+    .results-back-button {
+      margin: 1rem 0;
+      text-align: center;
+      
+      a {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+  }
+}
+
+@media (max-width: 576px) {
+  .landing-header {
+    flex-direction: column;
+    gap: 1rem;
+    
+    .logo-group {
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      gap: 0.5rem;
+    }
+
+    .logo-container {
+        width: 100%;
+        justify-content: center;
+        margin-top: 0;
+    }
+
+    .auth-container {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        margin-top: 0.5rem;
+    }
+  }
+}
+
+// Animations
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-20px);
+  }
+
+  100% {
+    transform: translateY(0px);
+  }
+}

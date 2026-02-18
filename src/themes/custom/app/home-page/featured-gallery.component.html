@@ -1,0 +1,35 @@
+<div class="featured-gallery">
+  <ng-container *ngIf="!loading; else loadingTpl">
+    <div *ngIf="collections.length; else emptyTpl" class="tiles">
+      <a *ngFor="let c of collections" [routerLink]="['/collections', c.id]" class="tile">
+        <div class="tile-image-wrap">
+            <div class="tile-image" [style.background-image]="'url(' + getImage(c) + ')'" role="img" [attr.aria-label]="c.name"></div>
+            <div class="tile-badge">Course</div>
+        </div>
+        <div class="tile-content">
+          <div class="tile-meta">
+              <span class="rating"><i class="fas fa-star"></i> 4.9</span>
+              <span class="reviews">(25)</span>
+          </div>
+          <h3 class="tile-title">{{ c.name }}</h3>
+          <p class="tile-desc">{{ c.metadata?.['dc.description.abstract']?.[0]?.value }}</p>
+          <div class="tile-footer">
+              <div class="author">
+                  <div class="author-avatar"></div>
+                  <span>DSpace</span>
+              </div>
+              <div class="price">$Free</div>
+          </div>
+        </div>
+      </a>
+    </div>
+  </ng-container>
+
+  <ng-template #loadingTpl>
+    <div class="loading">Cargando destacados...</div>
+  </ng-template>
+
+  <ng-template #emptyTpl>
+    <div class="empty">No hay colecciones destacadas.</div>
+  </ng-template>
+</div>

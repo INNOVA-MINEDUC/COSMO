@@ -1,0 +1,130 @@
+<div class="landing-wrapper" *ngVar="(itemRD$ | async) as itemRD">
+  <div class="landing-background">
+    <img src="assets/test/images/fondo-test.jpg" alt="Background" class="bg-img">
+  </div>
+
+  <header class="landing-header">
+    <div class="logo-group">
+      <div class="logo-container">
+        <!-- Using DSpace logo as placeholder for Ministry logo -->
+        <img src="assets/images/dspace-logo.svg" alt="Ministerio de Educación" class="ministry-logo">
+        <div class="logo-text">
+          <span>Ministerio de</span>
+          <span>Educación</span>
+          <small>GUATEMALA</small>
+        </div>
+      </div>
+      <div class="logo-container">
+        <img src="assets/images/dspace-logo.svg" alt="INNOVA" class="ministry-logo">
+        <div class="logo-text">
+          <span>INNOVA</span>
+        </div>
+      </div>
+    </div>
+    <div class="auth-container">
+      <!-- Search Button -->
+      <a [routerLink]="['/search']" [queryParams]="{ view: 'grid' }" class="search-pill" title="Búsqueda Avanzada">
+        <i class="fas fa-search"></i>
+        <span class="search-text d-none d-md-inline">Búsqueda Avanzada</span>
+      </a>
+
+      <!-- Statistics Button -->
+      <a *ngIf="itemRD?.payload" [routerLink]="['/statistics/items', itemRD?.payload?.id]" class="stats-pill" title="Estadísticas">
+        <i class="fas fa-chart-bar"></i>
+      </a>
+
+      <!-- Si NO está autenticado, mostrar botón de iniciar sesión -->
+      <ng-container *ngIf="!(isAuthenticated$ | async)">
+        <a routerLink="/login" class="login-pill">Iniciar Sesión</a>
+      </ng-container>
+      
+      <!-- Si ESTÁ autenticado, mostrar menú de usuario -->
+      <ng-container *ngIf="isAuthenticated$ | async">
+        <div class="user-menu-container">
+          <a routerLink="/profile" class="user-pill" title="Mi Perfil">
+            <i class="fas fa-user-circle"></i>
+            <span>Mi Perfil</span>
+          </a>
+          <a routerLink="/logout" class="logout-pill" title="Cerrar Sesión">
+            <i class="fas fa-sign-out-alt"></i>
+          </a>
+        </div>
+      </ng-container>
+    </div>
+  </header>
+
+  <main class="landing-main">
+    <div class="content-grid">
+      <!-- Columna del Astronauta (izquierda) -->
+      <div class="character-col d-none d-xl-block">
+        <img src="assets/test/images/astronauta.png" alt="Ajk'iy" class="astronaut-char">
+      </div>
+
+      <!-- Columna del Contenido (derecha) -->
+      <div class="interaction-col">
+        @if (itemRD?.hasSucceeded) {
+          <div class="item-page-container" @fadeInOut>
+            
+            <!-- Breadcrumbs Navigation -->
+            <div class="nav-path">
+              <span class="path-label">Ruta:</span>
+              <div class="path-steps">
+                  <a routerLink="/home" class="path-pill home-btn">INICIO</a>
+                  <ng-container *ngIf="(breadcrumbs$ | async) as breadcrumbs">
+                      <ng-container *ngFor="let bc of breadcrumbs; let i = index; let last = last">
+                          <!-- Skip Home by URL check instead of index -->
+                          <ng-container *ngIf="bc.url !== '/home' && bc.url !== '/'">
+                              <span class="separator">/</span>
+                              
+                              <!-- If not last, show as link -->
+                              <a *ngIf="!last" [routerLink]="bc.url" class="path-pill">
+                                  {{ bc.text | translate }}
+                              </a>
+
+                              <!-- If last, show as text (current) -->
+                              <span *ngIf="last" class="path-pill active">
+                                  {{ bc.text | translate }}
+                              </span>
+                          </ng-container>
+                      </ng-container>
+                  </ng-container>
+              </div>
+            </div>
+
+            @if (itemRD?.payload; as item) {
+              <div class="item-content-box">
+                <!-- Alerts and notifications -->
+                <div class="alerts-container">
+                  <ds-item-alerts [item]="item"></ds-item-alerts>
+                  <ds-access-by-token-notification></ds-access-by-token-notification>
+                  <ds-qa-event-notification [item]="item"></ds-qa-event-notification>
+                  <ds-notify-requests-status [itemUuid]="item.uuid"></ds-notify-requests-status>
+                  <ds-item-versions-notice [item]="item"></ds-item-versions-notice>
+                </div>
+
+                @if (!item.isWithdrawn || (isAdmin$|async)) {
+                  <ds-listable-object-component-loader [object]="item" [viewMode]="viewMode"></ds-listable-object-component-loader>
+                }
+
+                <!-- Versions -->
+                <div class="versions-container mt-4">
+                  <ds-item-versions [item]="item" [displayActions]="false"></ds-item-versions>
+                </div>
+              </div>
+            }
+          </div>
+        }
+        @if (itemRD?.hasFailed) {
+          <div class="container">
+            <ds-error message="{{'error.item' | translate}}"></ds-error>
+          </div>
+        }
+        @if (itemRD?.isLoading) {
+          <div class="container">
+            <ds-loading message="{{'loading.item' | translate}}"></ds-loading>
+          </div>
+        }
+      </div>
+    </div>
+  </main>
+</div>

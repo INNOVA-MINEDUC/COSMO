@@ -1,0 +1,132 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dspace-backend
+spec:
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: dspace-backend
+  template:
+    metadata:
+      labels:
+        app: dspace-backend
+    spec:
+      initContainers:
+        - name: wait-for-db
+          image: busybox
+          command: ['sh', '-c', 'until nc -z dspacedb 5432; do echo waiting for db; sleep 2; done;']
+        - name: wait-for-solr
+          image: busybox
+          command: ['sh', '-c', 'until nc -z dspacesolr.default.svc.cluster.local 8983; do echo waiting for solr; sleep 2; done;']
+        - name: db-migrate
+          image: dspace/dspace:dspace-9_x
+          command: ['/dspace/bin/dspace', 'database', 'migrate']
+          env:
+            - name: dspace__P__dir
+              value: /dspace
+            - name: db__P__password
+              valueFrom:
+                secretKeyRef:
+                  name: dspace-secrets
+                  key: db-password
+            - name: mail__P__server__P__password
+              valueFrom:
+                secretKeyRef:
+                  name: dspace-secrets
+                  key: mail-password
+            - name: google__P__recaptcha__P__key__P__secret
+              valueFrom:
+                secretKeyRef:
+                  name: dspace-secrets
+                  key: recaptcha-secret
+            - name: s3__P__access_key
+              valueFrom:
+                secretKeyRef:
+                  name: dspace-secrets
+                  key: s3-access-key
+            - name: s3__P__secret_key
+              valueFrom:
+                secretKeyRef:
+                  name: dspace-secrets
+                  key: s3-secret-key
+          volumeMounts:
+            - name: assetstore
+              mountPath: /dspace/assetstore
+            - name: backend-config-volume
+              mountPath: /dspace/config/local.cfg
+              subPath: local.cfg
+      containers:
+        - name: dspace-backend
+          image: dspace/dspace:dspace-9_x
+          command: ['java', '-jar', '/dspace/webapps/server-boot.jar', '--dspace.dir=/dspace']
+          env:
+            - name: JAVA_OPTS
+              value: "-Xmx1500m -Xms1500m"
+            - name: dspace__P__dir
+              value: /dspace
+            - name: db__P__password
+              valueFrom:
+                secretKeyRef:
+                  name: dspace-secrets
+                  key: db-password
+            - name: mail__P__server__P__password
+              valueFrom:
+                secretKeyRef:
+                  name: dspace-secrets
+                  key: mail-password
+            - name: google__P__recaptcha__P__key__P__secret
+              valueFrom:
+                secretKeyRef:
+                  name: dspace-secrets
+                  key: recaptcha-secret
+            - name: s3__P__access_key
+              valueFrom:
+                secretKeyRef:
+                  name: dspace-secrets
+                  key: s3-access-key
+            - name: s3__P__secret_key
+              valueFrom:
+                secretKeyRef:
+                  name: dspace-secrets
+                  key: s3-secret-key
+          ports:
+            - containerPort: 8080
+            - containerPort: 8000
+          resources:
+            requests:
+              memory: "1600Mi"
+              cpu: "500m"
+            limits:
+              memory: "2Gi"
+              cpu: "1000m"
+          livenessProbe:
+            httpGet:
+              path: /server/api
+              port: 8080
+            initialDelaySeconds: 240
+            periodSeconds: 20
+            timeoutSeconds: 5
+            failureThreshold: 3
+          readinessProbe:
+            httpGet:
+              path: /server/api
+              port: 8080
+            initialDelaySeconds: 120
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 3
+          volumeMounts:
+            - name: assetstore
+              mountPath: /dspace/assetstore
+            - name: backend-config-volume
+              mountPath: /dspace/config/local.cfg
+              subPath: local.cfg
+      volumes:
+        - name: assetstore
+          persistentVolumeClaim:
+            claimName: assetstore-pvc
+        - name: backend-config-volume
+          configMap:
+            name: dspace-backend-config

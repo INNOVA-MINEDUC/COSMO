@@ -1,0 +1,22 @@
+<section class="collection-list-page container" aria-label="Listado de colecciones">
+  <h1 class="page-title">Colecciones</h1>
+
+  <ng-container *ngIf="!loading; else loading">
+    <div *ngIf="collections.length; else noCollections">
+      <div class="collections-grid">
+        <article *ngFor="let col of collections" class="collection-card">
+          <h2>{{ col.name }}</h2>
+          <p>{{ col.metadata?.['dc.description.abstract']?.[0]?.value }}</p>
+          <a class="btn btn-primary" [routerLink]="['/collections', col.id]">Ver colección</a>
+        </article>
+      </div>
+    </div>
+    <ng-template #noCollections>
+      <p>No hay colecciones disponibles.</p>
+    </ng-template>
+  </ng-container>
+
+  <ng-template #loading>
+    <p>Cargando colecciones...</p>
+  </ng-template>
+</section>

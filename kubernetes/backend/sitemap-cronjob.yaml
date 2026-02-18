@@ -1,0 +1,54 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: dspace-sitemap-sa
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: dspace-sitemap-role
+rules:
+  - apiGroups: [""]
+    resources: ["pods", "pods/log"]
+    verbs: ["get", "list"]
+  - apiGroups: [""]
+    resources: ["pods/exec"]
+    verbs: ["create"]
+  - apiGroups: ["apps"]
+    resources: ["deployments"]
+    verbs: ["get", "list"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: dspace-sitemap-rb
+subjects:
+  - kind: ServiceAccount
+    name: dspace-sitemap-sa
+roleRef:
+  kind: Role
+  name: dspace-sitemap-role
+  apiGroup: rbac.authorization.k8s.io
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: dspace-sitemap-cron
+spec:
+  schedule: "0 4 * * *" # Run at 4 AM daily
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          serviceAccountName: dspace-sitemap-sa
+          containers:
+            - name: kubectl
+              image: bitnami/kubectl:latest
+              command:
+                - /bin/sh
+                - -c
+                - |
+                  POD_NAME=$(kubectl get pods -l app=dspace-backend -o jsonpath="{.items[0].metadata.name}")
+                  echo "Executing sitemap generation in pod $POD_NAME"
+                  kubectl exec $POD_NAME -- /dspace/bin/dspace generate-sitemaps
+          restartPolicy: OnFailure

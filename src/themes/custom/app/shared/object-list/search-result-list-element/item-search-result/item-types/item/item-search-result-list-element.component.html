@@ -1,0 +1,92 @@
+<div class="search-result-card">
+  @if (linkType !== linkTypes.None) {
+    <a 
+      [target]="(linkType === linkTypes.ExternalLink) ? '_blank' : '_self'" 
+      [attr.rel]="(linkType === linkTypes.ExternalLink) ? 'noopener noreferrer' : null"
+      [routerLink]="[itemPageRoute]" 
+      class="card-link">
+      
+      <div class="thumbnail-container">
+        <ds-thumbnail [thumbnail]="dso?.thumbnail | async" [limitWidth]="false"></ds-thumbnail>
+      </div>
+      
+      <div class="item-content">
+        @if (showLabel) {
+          <ds-badges [object]="dso" [context]="context" [showAccessStatus]="true"></ds-badges>
+        }
+        
+        <h4 class="item-title" [innerHTML]="dsoTitle"></h4>
+        
+        @if (dso.allMetadata(['dc.contributor.author', 'dc.creator', 'dc.contributor.*']).length > 0) {
+          <div class="metadata authors">
+            @for (author of allMetadataValues(['dc.contributor.author', 'dc.creator', 'dc.contributor.*']).slice(0, 3); track author; let last = $last) {
+              <span [innerHTML]="author"></span>@if (!last) {<span>, </span>}
+            }
+            @if (allMetadataValues(['dc.contributor.author', 'dc.creator', 'dc.contributor.*']).length > 3) {
+              <span class="et-al">et al.</span>
+            }
+          </div>
+        }
+        
+        @if (dso.firstMetadataValue('dc.date.issued')) {
+          <div class="metadata date" [innerHTML]="firstMetadataValue('dc.date.issued')"></div>
+        }
+        
+        @if (dso.firstMetadataValue('dc.description.abstract')) {
+          <div class="item-abstract">
+            <ds-truncatable-part [id]="dso.id" [minLines]="2">
+              <span [innerHTML]="firstMetadataValue('dc.description.abstract')"></span>
+            </ds-truncatable-part>
+          </div>
+        }
+        
+        @if (dso.firstMetadataValue('dc.type')) {
+          <span class="item-type" [innerHTML]="firstMetadataValue('dc.type')"></span>
+        }
+      </div>
+    </a>
+  }
+  
+  @if (linkType === linkTypes.None) {
+    <div class="card-no-link">
+      <div class="thumbnail-container">
+        <ds-thumbnail [thumbnail]="dso?.thumbnail | async" [limitWidth]="false"></ds-thumbnail>
+      </div>
+      
+      <div class="item-content">
+        @if (showLabel) {
+          <ds-badges [object]="dso" [context]="context" [showAccessStatus]="true"></ds-badges>
+        }
+        
+        <h4 class="item-title" [innerHTML]="dsoTitle"></h4>
+        
+        @if (dso.allMetadata(['dc.contributor.author', 'dc.creator', 'dc.contributor.*']).length > 0) {
+          <div class="metadata authors">
+            @for (author of allMetadataValues(['dc.contributor.author', 'dc.creator', 'dc.contributor.*']).slice(0, 3); track author; let last = $last) {
+              <span [innerHTML]="author"></span>@if (!last) {<span>, </span>}
+            }
+            @if (allMetadataValues(['dc.contributor.author', 'dc.creator', 'dc.contributor.*']).length > 3) {
+              <span class="et-al">et al.</span>
+            }
+          </div>
+        }
+        
+        @if (dso.firstMetadataValue('dc.date.issued')) {
+          <div class="metadata date" [innerHTML]="firstMetadataValue('dc.date.issued')"></div>
+        }
+        
+        @if (dso.firstMetadataValue('dc.description.abstract')) {
+          <div class="item-abstract">
+            <ds-truncatable-part [id]="dso.id" [minLines]="2">
+              <span [innerHTML]="firstMetadataValue('dc.description.abstract')"></span>
+            </ds-truncatable-part>
+          </div>
+        }
+        
+        @if (dso.firstMetadataValue('dc.type')) {
+          <span class="item-type" [innerHTML]="firstMetadataValue('dc.type')"></span>
+        }
+      </div>
+    </div>
+  }
+</div>

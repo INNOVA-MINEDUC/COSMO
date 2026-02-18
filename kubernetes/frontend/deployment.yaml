@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dspace-angular
+spec:
+  selector:
+    matchLabels:
+      app: dspace-angular
+  template:
+    metadata:
+      labels:
+        app: dspace-angular
+    spec:
+      containers:
+        - name: dspace-angular
+          image: sincal/dspace-angular:latest
+          imagePullPolicy: Always
+          resources:
+            requests:
+              memory: "512Mi"
+              cpu: "250m"
+            limits:
+              memory: "1Gi"
+              cpu: "1000m"
+          env:
+            - name: DSPACE_UI_SSL
+              value: 'false'
+            - name: DSPACE_UI_HOST
+              value: '0.0.0.0'
+            - name: DSPACE_UI_PORT
+              value: '4000'
+            - name: DSPACE_UI_NAMESPACE
+              value: /
+            - name: DSPACE_REST_SSL
+              value: 'true'
+            - name: DSPACE_REST_HOST
+              value: cosmo-dev.mineduc.edu.gt
+            - name: DSPACE_REST_PORT
+              value: '443'
+            - name: DSPACE_REST_NAMESPACE
+              value: /server
+            - name: DSPACE_REST_SSRBASEURL
+              value: http://dspace-backend:8080/server
+          volumeMounts:
+            - name: config-volume
+              mountPath: /app/config/config.prod.yml
+              subPath: config.prod.yml
+      volumes:
+        - name: config-volume
+          configMap:
+            name: dspace-frontend-config

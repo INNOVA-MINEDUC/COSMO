@@ -1,0 +1,127 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: dspace-backend-config
+data:
+  local.cfg: |
+    ##########################
+    # SERVER CONFIGURATION   #
+    ##########################
+    dspace.dir=/dspace
+    dspace.hostname = cosmo-dev.mineduc.edu.gt
+    dspace.baseUrl = https://cosmo-dev.mineduc.edu.gt
+    dspace.ui.url = https://cosmo-dev.mineduc.edu.gt
+    dspace.server.url = https://cosmo-dev.mineduc.edu.gt/server
+    dspace.name = DSpace at My University
+
+    ##########################
+    # DATABASE CONFIGURATION #
+    ##########################
+    db.url = jdbc:postgresql://dspacedb:5432/dspace
+    db.driver = org.postgresql.Driver
+    db.dialect=org.hibernate.dialect.PostgreSQLDialect
+    db.username = dspace
+      db.password = ${db.password}
+    db.maxconnections = 30
+    db.maxwait = 5000
+    db.maxidle = -1
+
+    ##########################
+    # EMAIL CONFIGURATION    #
+    ##########################
+    mail.server = smtp.sendgrid.net
+    mail.server.username = apikey
+    mail.server.password = placeholder
+    mail.server.port = 2525
+    mail.extraproperties = mail.smtp.auth=true,mail.smtp.starttls.enable=true,mail.smtp.ssl.trust=smtp.sendgrid.net
+    
+    # From address for system emails
+    mail.from.address = jsincal@mineduc.edu.gt
+    mail.admin = jsincal@mineduc.edu.gt
+    mail.helpdesk = jsincal@mineduc.edu.gt
+
+    ##########################
+    # CORS CONFIGURATION     #
+    ##########################
+    rest.cors.allowed-origins = https://cosmo-dev.mineduc.edu.gt
+    signposting.cors.allowed-origins = https://cosmo-dev.mineduc.edu.gt
+    rest.cors.allow-credentials = true
+    rest.cors.allowed-headers = Accept, Authorization, Content-Type, Origin, X-Requested-With, X-XSRF-TOKEN, x-captcha-payload
+    rest.cors.allowed-methods = GET, POST, PUT, PATCH, DELETE, OPTIONS
+
+    ##########################
+    # RESEARCHER PROFILE     #
+    ##########################
+    researcher-profile.entity-type = Person
+    rest.cors.exposed-headers = Authorization, DSPACE-XSRF-TOKEN
+    rest.cors.max-age = 3600
+
+    ##########################
+    # GOOGLE ANALYTICS       #
+    ##########################
+    google.analytics.key = G-LPPTBW2L3Z
+
+    ##########################
+    # USAGE STATISTICS       #
+    ##########################
+    usage-statistics.authorization.admin.usage = false
+    usage-statistics.authorization.admin.search = false
+    usage-statistics.authorization.admin.workflow = false
+    usage-statistics.logBots = true
+    usage-statistics.bots.case-insensitive = true
+    # usage-statistics.dbfile = /dspace/config/geoip/GeoLite2-City.mmdb
+    usage-statistics.dbfile = /dspace/assetstore/GeoLite2-City.mmdb
+
+    ##########################
+    # CONTENT REPORTS        #
+    ##########################
+    contentreport.enable = true
+    
+    ##########################
+    # REGISTRATION           #
+    ##########################
+    registration.verification.enabled = true
+
+    ##########################
+    # RECAPTCHA              #
+    ##########################
+    google.recaptcha.version = v2
+    google.recaptcha.mode = checkbox
+    google.recaptcha.key.site = 6LdWdCEsAAAAAJmm5oSzAYWv5wPhdR8pC9P2sCuE
+    google.recaptcha.key.secret = placeholder
+
+    ##########################
+    # OTHER CONFIGURATION    #
+    ##########################
+    solr.server = http://dspacesolr:8983/solr
+    proxies.trusted.ipranges = 0.0.0.0/0
+    server.forward.headers.strategy = framework
+    server.tomcat.remote.ip.header = x-forwarded-for
+    server.tomcat.protocol.header = x-forwarded-proto
+
+    ##########################
+    # SITEMAPS               #
+    ##########################
+    sitemap.path = sitemaps
+    sitemap.ignore-prefixes = true
+
+    ##########################
+    # AUTHENTICATION         #
+    ##########################
+    sitemap.dir = /dspace/assetstore/sitemaps
+
+    ##########################
+    # AUTHENTICATION         #
+    # Domain valid for password authentication
+    authentication-password.domain.valid = @gmail.com
+
+    ##########################
+    # STORAGE CONFIGURATION  #
+    ##########################
+    assetstore.index.primary = 1
+    assetstore.s3.enabled = true
+    plugin.single.org.dspace.storage.bitstore.BitStoreService = org.dspace.storage.bitstore.S3BitStoreService
+    assetstore.s3.bucketName = dspace-2025
+    assetstore.s3.awsRegion = us-east-1
+    assetstore.s3.awsAccessKey = ${s3__P__access_key}
+    assetstore.s3.awsSecretKey = ${s3__P__secret_key}

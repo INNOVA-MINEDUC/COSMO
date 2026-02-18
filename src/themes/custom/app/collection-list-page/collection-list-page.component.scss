@@ -1,0 +1,37 @@
+.collection-list-page {
+  padding: 2rem 0;
+  .page-title {
+    font-size: 2rem;
+    color: #0b5394;
+    margin-bottom: 1.5rem;
+    font-weight: 600;
+  }
+  .collections-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.5rem;
+  }
+  .collection-card {
+    background: rgba(255,255,255,0.92);
+    border-radius: 10px;
+    box-shadow: 0 2px 12px rgba(16,24,40,0.08);
+    padding: 1.25rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    h2 {
+      font-size: 1.2rem;
+      color: #1e8f7a;
+      margin: 0 0 0.25rem 0;
+    }
+    p {
+      font-size: 0.95rem;
+      color: #43515F;
+      margin-bottom: 0.5rem;
+    }
+    .btn {
+      align-self: flex-start;
+      margin-top: 0.5rem;
+    }
+  }
+}

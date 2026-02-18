@@ -1,0 +1,145 @@
+// Crafto Footer Styles
+.crafto-footer {
+    background-color: #1a1a1a;
+    color: #b0b0b0;
+    font-family: 'Poppins', sans-serif;
+    margin-top: auto;
+
+    .footer-top {
+        padding: 5rem 0 3rem;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .footer-heading {
+        color: #fff;
+        font-size: 1.1rem;
+        font-weight: 600;
+        margin-bottom: 1.5rem;
+        position: relative;
+        padding-bottom: 0.5rem;
+        
+        &::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 30px;
+            height: 2px;
+            background-color: #fca311;
+        }
+    }
+
+    .footer-brand {
+        .footer-logo {
+            height: 35px;
+            margin-bottom: 1.5rem;
+            filter: brightness(0) invert(1); // Make logo white if it's not
+        }
+        
+        .footer-desc {
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            
+            a {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 36px;
+                height: 36px;
+                background-color: rgba(255,255,255,0.1);
+                color: #fff;
+                border-radius: 50%;
+                transition: all 0.3s;
+                text-decoration: none;
+                
+                &:hover {
+                    background-color: #fca311;
+                    transform: translateY(-3px);
+                }
+            }
+        }
+    }
+
+    .footer-links {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        
+        li {
+            margin-bottom: 0.8rem;
+            
+            a {
+                color: #b0b0b0;
+                text-decoration: none;
+                transition: color 0.2s;
+                font-size: 0.95rem;
+                
+                &:hover {
+                    color: #fca311;
+                    padding-left: 5px;
+                }
+            }
+        }
+    }
+
+    .newsletter-form {
+        display: flex;
+        position: relative;
+        
+        input {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            padding-right: 3rem;
+            border-radius: 4px;
+            border: 1px solid rgba(255,255,255,0.1);
+            background-color: rgba(255,255,255,0.05);
+            color: #fff;
+            
+            &:focus {
+                outline: none;
+                border-color: #fca311;
+            }
+        }
+        
+        button {
+            position: absolute;
+            right: 5px;
+            top: 5px;
+            bottom: 5px;
+            width: 40px;
+            background-color: #fca311;
+            border: none;
+            border-radius: 3px;
+            color: #fff;
+            cursor: pointer;
+            transition: background 0.3s;
+            
+            &:hover {
+                background-color: darken(#fca311, 10%);
+            }
+        }
+    }
+
+    .footer-bottom {
+        padding: 1.5rem 0;
+        font-size: 0.9rem;
+        
+        a {
+            color: #fff;
+            text-decoration: none;
+            &:hover {
+                color: #fca311;
+            }
+        }
+        
+        p {
+            margin: 0;
+        }
+    }
+}

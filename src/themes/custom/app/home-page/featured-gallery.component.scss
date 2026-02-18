@@ -1,0 +1,132 @@
+// Crafto eLearning inspired gallery tiles
+.featured-gallery { 
+  .tiles {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 2rem;
+  }
+
+  .tile {
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    text-decoration: none;
+    color: #333;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    transition: all 0.3s ease;
+    border: 1px solid #eee;
+    height: 100%;
+    
+    &:hover { 
+      transform: translateY(-5px); 
+      box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+      
+      .tile-image {
+        transform: scale(1.05);
+      }
+    }
+
+    .tile-image-wrap {
+        position: relative;
+        height: 200px;
+        overflow: hidden;
+        
+        .tile-image {
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            transition: transform 0.5s ease;
+        }
+        
+        .tile-badge {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            background: #fff;
+            color: #333;
+            padding: 0.25rem 0.75rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+    }
+
+    .tile-content {
+        padding: 1.5rem;
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+        
+        .tile-meta {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.75rem;
+            font-size: 0.9rem;
+            
+            .rating {
+                color: #fca311;
+                font-weight: 600;
+                margin-right: 0.5rem;
+            }
+            
+            .reviews {
+                color: #999;
+            }
+        }
+
+        .tile-title { 
+          margin: 0 0 0.75rem 0; 
+          font-size: 1.1rem; 
+          font-weight: 600;
+          line-height: 1.4;
+          color: #232323;
+        }
+        
+        .tile-desc { 
+          margin: 0 0 1.5rem 0; 
+          font-size: 0.9rem; 
+          color: #777;
+          line-height: 1.6;
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
+          flex-grow: 1;
+        }
+        
+        .tile-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 1rem;
+            border-top: 1px solid #eee;
+            
+            .author {
+                display: flex;
+                align-items: center;
+                font-size: 0.9rem;
+                color: #555;
+                
+                .author-avatar {
+                    width: 30px;
+                    height: 30px;
+                    background-color: #eee;
+                    border-radius: 50%;
+                    margin-right: 0.5rem;
+                }
+            }
+            
+            .price {
+                font-weight: 700;
+                color: #fca311;
+                font-size: 1.1rem;
+            }
+        }
+    }
+  }
+}

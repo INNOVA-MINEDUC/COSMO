@@ -1,0 +1,140 @@
+<div class="landing-wrapper">
+
+  <div class="landing-background">
+    <img src="assets/test/images/fondo-test.jpg" alt="Fondo" class="bg-img">
+  </div>
+
+  <header class="landing-header">
+    <div class="logo-group">
+      <div class="logo-container">
+        <img src="assets/images/dspace-logo.svg" alt="Ministerio" class="ministry-logo">
+        <div class="logo-text">
+          <span>Ministerio de</span>
+          <span>Educación</span>
+          <small>GUATEMALA</small>
+        </div>
+      </div>
+      <div class="logo-container">
+        <img src="assets/images/dspace-logo.svg" alt="INNOVA" class="ministry-logo">
+        <div class="logo-text"><span>INNOVA</span></div>
+      </div>
+    </div>
+
+    <div class="auth-container">
+      <!-- Search Button -->
+      <a [routerLink]="['/search']" [queryParams]="{ view: 'grid' }" class="search-pill" title="Búsqueda Avanzada">
+        <i class="fas fa-search"></i>
+        <span class="search-text d-none d-md-inline">Búsqueda Avanzada</span>
+      </a>
+
+      <!-- Statistics Button -->
+      <ng-container *ngIf="(collectionRD$ | async)?.payload as collection">
+        <a [routerLink]="['/statistics/collections', collection.id]" class="stats-pill" title="Estadísticas">
+          <i class="fas fa-chart-bar"></i>
+        </a>
+      </ng-container>
+
+      <!-- Si NO está autenticado, mostrar botón de iniciar sesión -->
+      <ng-container *ngIf="!(isAuthenticated$ | async)">
+        <a routerLink="/login" class="login-pill">Iniciar Sesión</a>
+      </ng-container>
+      
+      <!-- Si ESTÁ autenticado, mostrar menú de usuario -->
+      <ng-container *ngIf="isAuthenticated$ | async">
+        <div class="user-menu-container">
+          <a routerLink="/profile" class="user-pill" title="Mi Perfil">
+            <i class="fas fa-user-circle"></i>
+            <span>Mi Perfil</span>
+          </a>
+          <a routerLink="/logout" class="logout-pill" title="Cerrar Sesión">
+            <i class="fas fa-sign-out-alt"></i>
+          </a>
+        </div>
+      </ng-container>
+    </div>
+  </header>
+
+  <main class="landing-main">
+    <div class="content-grid">
+
+      <div class="character-col">
+        <img src="assets/test/images/astronauta.png" alt="Ajk'iy" class="astronaut-char">
+      </div>
+
+      <div class="interaction-col">
+
+        <div class="nav-path">
+          <span class="path-label">Ruta:</span>
+          <div class="path-steps">
+
+            <a routerLink="/home" class="path-pill home-btn">INICIO</a>
+
+            <ng-container *ngIf="(breadcrumbs$ | async) as breadcrumbs">
+                <ng-container *ngFor="let bc of breadcrumbs; let i = index; let last = last">
+                    <!-- Skip Home by URL check instead of index -->
+                    <ng-container *ngIf="bc.url !== '/home' && bc.url !== '/'">
+                        <span class="separator">/</span>
+                        
+                        <!-- If not last, show as link -->
+                        <a *ngIf="!last" [routerLink]="bc.url" class="path-pill">
+                            {{ bc.text | translate }}
+                        </a>
+
+                        <!-- If last, show as text (current) -->
+                        <span *ngIf="last" class="current-location">
+                            {{ bc.text | translate }}
+                        </span>
+                    </ng-container>
+                </ng-container>
+            </ng-container>
+
+          </div>
+        </div>
+
+        <div class="speech-bubble" *ngIf="(collectionRD$ | async)?.payload as collection">
+          <h1>{{ collection.name }}</h1>
+          <p>Selecciona el contenido que deseas ver:</p>
+        </div>
+
+        <div class="selection-area">
+          <div class="level-buttons">
+
+            <ng-container *ngIf="(itemsRD$ | async) as searchRD">
+              <ng-container *ngIf="searchRD?.hasSucceeded">
+
+                <a *ngFor="let result of searchRD.payload.page" [routerLink]="['/items', result.indexableObject.id]"
+                  class="level-btn content-btn">
+                  <i class="fas fa-file-alt" style="margin-right: 8px;"></i>
+                  {{ result.indexableObject.name }}
+                </a>
+
+              </ng-container>
+
+              <div *ngIf="searchRD?.isLoading" style="color: #1a2b49;">
+                Cargando contenido...
+              </div>
+            </ng-container>
+
+            <div *ngIf="(itemsRD$ | async)?.payload?.page?.length === 0"
+              style="color: #1a2b49; font-weight: bold; margin-top: 1rem; background: rgba(255,255,255,0.8); padding: 1rem; border-radius: 10px;">
+              <p>No hay contenido disponible en esta colección.</p>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="landing-footer">
+    <div class="footer-left"></div>
+    <div class="footer-right">
+      <div class="digecade-badge">
+        <img src="assets/images/dspace-logo.svg" class="digecade-logo">
+      </div>
+      <div class="social-links">
+        <a href="#"><i class="fas fa-globe"></i></a>
+      </div>
+    </div>
+  </footer>
+</div>

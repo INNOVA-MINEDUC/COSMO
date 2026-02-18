@@ -1,0 +1,32 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: dspace-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/service-upstream: "true"
+    # nginx.ingress.kubernetes.io/rewrite-target: /
+    # You might need specific annotations depending on your Ingress Controller
+    nginx.ingress.kubernetes.io/proxy-body-size: "512m" # For large file uploads
+    nginx.ingress.kubernetes.io/proxy-connect-timeout: "300"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "300"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "300"
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: cosmo-dev.mineduc.edu.gt
+      http:
+        paths:
+          - path: /server
+            pathType: Prefix
+            backend:
+              service:
+                name: dspace-backend
+                port:
+                  number: 80
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: dspace-angular
+                port:
+                  number: 4000
