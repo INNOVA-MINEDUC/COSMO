@@ -60,12 +60,29 @@ spec:
       containers:
         - name: dspace-backend
           image: dspace/dspace:dspace-9_x
-          command: ['java', '-jar', '/dspace/webapps/server-boot.jar', '--dspace.dir=/dspace']
+          command:
+            - 'java'
+            - '-jar'
+            - '/dspace/webapps/server-boot.jar'
+            - '--dspace.dir=/dspace'
+            - '--server.forward-headers-strategy=FRAMEWORK'
           env:
             - name: JAVA_OPTS
               value: "-Xmx1500m -Xms1500m"
             - name: dspace__P__dir
               value: /dspace
+            - name: dspace__P__server__P__url
+              value: https://cosmo-dev.mineduc.edu.gt/server
+            - name: dspace__P__ui__P__url
+              value: https://cosmo-dev.mineduc.edu.gt
+            - name: dspace__P__name
+              value: 'DSpace at My University'
+            - name: useProxies
+              value: 'true'
+            - name: SERVER_FORWARD_HEADERS_STRATEGY
+              value: 'FRAMEWORK'
+            - name: SERVER_TOMCAT_REMOTEIP_INTERNAL__PROXIES
+              value: '.*'
             - name: db__P__password
               valueFrom:
                 secretKeyRef:

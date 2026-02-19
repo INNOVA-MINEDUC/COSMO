@@ -143,7 +143,7 @@ data:
     security:
       captcha:
         enabled: true
-        siteKey: '6LdWdCEsAAAAAJmm5oSzAYWv5wPhdR8pC9P2sCuE'
+        siteKey: '6Lf7O3AsAAAAAPFxbIf6jB8N9-KHJsy6YlRhUY3S'
         mode: 'checkbox'
         version: 'v2'
       csp:

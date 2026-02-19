@@ -4,12 +4,15 @@ metadata:
   name: dspace-ingress
   annotations:
     nginx.ingress.kubernetes.io/service-upstream: "true"
-    # nginx.ingress.kubernetes.io/rewrite-target: /
-    # You might need specific annotations depending on your Ingress Controller
     nginx.ingress.kubernetes.io/proxy-body-size: "512m" # For large file uploads
     nginx.ingress.kubernetes.io/proxy-connect-timeout: "300"
     nginx.ingress.kubernetes.io/proxy-read-timeout: "300"
     nginx.ingress.kubernetes.io/proxy-send-timeout: "300"
+    # TLS is terminated by external NGINX (Docker), not inside K8s
+    # Pass through X-Forwarded-* headers from the external proxy
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    # Use a ConfigMap to set X-Forwarded-Proto/Ssl headers (snippets disabled)
+    nginx.ingress.kubernetes.io/proxy-set-headers: "default/dspace-custom-headers"
 spec:
   ingressClassName: nginx
   rules:

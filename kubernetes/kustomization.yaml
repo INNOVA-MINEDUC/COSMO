@@ -4,6 +4,7 @@ kind: Kustomization
 resources:
   # Common Resources
   - common/secrets.yaml
+  - common/custom-headers.yaml
   - common/ingress.yaml
 
   # Database (PostgreSQL)

@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: dspace-custom-headers
+data:
+  X-Forwarded-Proto: "https"
+  X-Forwarded-Ssl: "on"

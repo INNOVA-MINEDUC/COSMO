@@ -12,7 +12,10 @@ data:
     dspace.baseUrl = https://cosmo-dev.mineduc.edu.gt
     dspace.ui.url = https://cosmo-dev.mineduc.edu.gt
     dspace.server.url = https://cosmo-dev.mineduc.edu.gt/server
-    dspace.name = DSpace at My University
+    dspace.name = COSMO
+    # Proxy settings
+    useProxies = true
+    server.forward-headers-strategy = NATIVE
 
     ##########################
     # DATABASE CONFIGURATION #
@@ -29,16 +32,14 @@ data:
     ##########################
     # EMAIL CONFIGURATION    #
     ##########################
-    mail.server = smtp.sendgrid.net
-    mail.server.username = apikey
+    mail.server = smtp.gmail.com
+    mail.server.username = noreply-sistemas@mineduc.edu.gt
     mail.server.password = placeholder
-    mail.server.port = 2525
-    mail.extraproperties = mail.smtp.auth=true,mail.smtp.starttls.enable=true,mail.smtp.ssl.trust=smtp.sendgrid.net
-    
-    # From address for system emails
-    mail.from.address = jsincal@mineduc.edu.gt
-    mail.admin = jsincal@mineduc.edu.gt
-    mail.helpdesk = jsincal@mineduc.edu.gt
+    mail.server.port = 465
+    mail.extraproperties = mail.smtp.auth=true, mail.smtp.ssl.enable=true, mail.smtp.socketFactory.port=465, mail.smtp.socketFactory.class=javax.net.ssl.SSLSocketFactory,  mail.smtp.ssl.trust=smtp.gmail.com    # From address for system emails
+    mail.from.address = noreply-sistemasl@mineduc.edu.gt
+    mail.admin = noreply-sistemas@mineduc.edu.gt
+    mail.helpdesk = noreply-sistemas@mineduc.edu.gt
 
     ##########################
     # CORS CONFIGURATION     #
@@ -59,7 +60,7 @@ data:
     ##########################
     # GOOGLE ANALYTICS       #
     ##########################
-    google.analytics.key = G-LPPTBW2L3Z
+    google.analytics.key = G-3SRP6FRH5E
 
     ##########################
     # USAGE STATISTICS       #
@@ -87,7 +88,7 @@ data:
     ##########################
     google.recaptcha.version = v2
     google.recaptcha.mode = checkbox
-    google.recaptcha.key.site = 6LdWdCEsAAAAAJmm5oSzAYWv5wPhdR8pC9P2sCuE
+    google.recaptcha.key.site = 6Lf7O3AsAAAAAPFxbIf6jB8N9-KHJsy6YlRhUY3S
     google.recaptcha.key.secret = placeholder
 
     ##########################
@@ -113,13 +114,13 @@ data:
     ##########################
     # AUTHENTICATION         #
     # Domain valid for password authentication
-    authentication-password.domain.valid = @gmail.com
+    authentication-password.domain.valid = 
 
     ##########################
     # STORAGE CONFIGURATION  #
     ##########################
-    assetstore.index.primary = 1
-    assetstore.s3.enabled = true
+    assetstore.index.primary = 0
+    assetstore.s3.enabled = false
     plugin.single.org.dspace.storage.bitstore.BitStoreService = org.dspace.storage.bitstore.S3BitStoreService
     assetstore.s3.bucketName = dspace-2025
     assetstore.s3.awsRegion = us-east-1
